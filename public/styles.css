@@ -7,7 +7,7 @@ body {
   width: 100%;
   min-height: 100dvh;
 
-  padding: 24px;
+  padding-inline: 24px;
 
   display: flex;
   justify-content: center;
@@ -62,6 +62,7 @@ a::before {
 }
 
 @media (hover: hover) {
+
   a:hover,
   a:visited:hover {
     color: white;
