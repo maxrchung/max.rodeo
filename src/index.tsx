@@ -3,7 +3,13 @@ import { jsxRenderer } from "hono/jsx-renderer";
 import { fetchSubdomains, type Subdomain } from "./fetchSubdomains";
 
 let subdomains = await fetchSubdomains();
-setInterval(async () => (subdomains = await fetchSubdomains()), 60 * 60 * 1000); // Refetch every hour
+setInterval(async () => {
+  try {
+    subdomains = await fetchSubdomains();
+  } catch (error) {
+    console.error("Failed to refresh subdomains:", error);
+  }
+}, 60 * 60 * 1000); // Refetch every hour
 
 const LandingPage = ({ subdomains }: { subdomains: Subdomain[] }) => {
   return (

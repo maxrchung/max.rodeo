@@ -4,8 +4,8 @@ body {
 }
 
 body {
-  width: 100dvw;
-  height: 100dvh;
+  width: 100%;
+  min-height: 100dvh;
 
   padding: 24px;
 
@@ -46,14 +46,6 @@ a:visited {
   color: blue;
 }
 
-a:hover,
-a:visited:hover {
-  color: white;
-  transform: rotate(-5deg);
-  cursor: none;
-  z-index: 10;
-}
-
 a::before {
   content: "";
   position: absolute;
@@ -69,8 +61,18 @@ a::before {
     opacity 300ms ease;
 }
 
-a:hover::before {
-  inset: -32px;
-  opacity: 1;
-  transform: rotate(4deg);
+@media (hover: hover) {
+  a:hover,
+  a:visited:hover {
+    color: white;
+    transform: rotate(-5deg);
+    cursor: none;
+    z-index: 10;
+  }
+
+  a:hover::before {
+    inset: -32px;
+    opacity: 1;
+    transform: rotate(4deg);
+  }
 }
