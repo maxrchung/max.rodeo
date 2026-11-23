@@ -6,7 +6,7 @@ import { fetchSubdomains, type Subdomain } from "./fetchSubdomains";
 let subdomains = await fetchSubdomains();
 setInterval(async () => (subdomains = await fetchSubdomains()), 60 * 60 * 1000); // Refetch every hour
 
-function HomePage({ subdomains }: { subdomains: Subdomain[] }) {
+const LandingPage = ({ subdomains }: { subdomains: Subdomain[] }) => {
   return (
     <html lang="en">
       <head>
@@ -54,7 +54,7 @@ app.use(jsxRenderer());
 
 app.get("/", (context) => {
   context.header("Cache-Control", "max-age=3600");
-  return context.render(<HomePage subdomains={subdomains} />);
+  return context.render(<LandingPage subdomains={subdomains} />);
 });
 
 export default {
