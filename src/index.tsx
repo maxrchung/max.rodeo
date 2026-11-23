@@ -1,4 +1,5 @@
 import { Hono } from "hono";
+import { serveStatic } from "hono/bun";
 import { jsxRenderer } from "hono/jsx-renderer";
 import { fetchSubdomains, type Subdomain } from "./fetchSubdomains";
 
@@ -11,7 +12,14 @@ function HomePage({ subdomains }: { subdomains: Subdomain[] }) {
       <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta name="color-scheme" content="light" />
         <title>max.rodeo</title>
+        <meta name="description" content="Landing page for my web projects" />
+        <meta property="og:title" content="max.rodeo" />
+        <meta property="og:description" content="Landing page for my web projects" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://max.rodeo" />
+        <link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="240x240" />
       </head>
 
       <body>
@@ -41,6 +49,7 @@ function HomePage({ subdomains }: { subdomains: Subdomain[] }) {
 
 export const app = new Hono();
 
+app.use("/favicon.ico", serveStatic({ path: "./public/favicon.ico" }));
 app.use(jsxRenderer());
 
 app.get("/", (context) => {
