@@ -1,5 +1,4 @@
 import { Hono } from "hono";
-import { serveStatic } from "hono/bun";
 import { jsxRenderer } from "hono/jsx-renderer";
 import { fetchSubdomains, type Subdomain } from "./fetchSubdomains";
 
@@ -20,6 +19,8 @@ const LandingPage = ({ subdomains }: { subdomains: Subdomain[] }) => {
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://max.rodeo" />
         <link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="240x240" />
+        <link rel="stylesheet" href="/reset.css" />
+        <link rel="stylesheet" href="/styles.css" />
       </head>
 
       <body>
@@ -37,6 +38,7 @@ const LandingPage = ({ subdomains }: { subdomains: Subdomain[] }) => {
                 <a href={`https://${site.subdomain}.max.rodeo`}>
                   {site.subdomain}
                 </a>
+                <br />
                 {site.description ? ` ${site.description}` : null}
               </li>
             ))}
@@ -45,15 +47,38 @@ const LandingPage = ({ subdomains }: { subdomains: Subdomain[] }) => {
       </body>
     </html>
   );
-}
+};
 
 export const app = new Hono();
 
-app.use("/favicon.ico", serveStatic({ path: "./public/favicon.ico" }));
 app.use(jsxRenderer());
 
+app.get(
+  "/favicon.ico",
+  () =>
+    new Response(Bun.file("./public/favicon.ico"), {
+      headers: { "Content-Type": "image/x-icon" },
+    }),
+);
+app.get(
+  "/reset.css",
+  () =>
+    new Response(Bun.file("./public/reset.css"), {
+      headers: { "Content-Type": "text/css; charset=utf-8" },
+    }),
+);
+app.get(
+  "/styles.css",
+  () =>
+    new Response(Bun.file("./public/styles.css"), {
+      headers: { "Content-Type": "text/css; charset=utf-8" },
+    }),
+);
+
 app.get("/", (context) => {
-  context.header("Cache-Control", "max-age=3600");
+  if (Bun.env.RAILWAY_ENVIRONMENT) {
+    context.header("Cache-Control", "max-age=3600");
+  }
   return context.render(<LandingPage subdomains={subdomains} />);
 });
 
