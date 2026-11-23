@@ -64,13 +64,33 @@ a::before {
 a:hover,
 a:visited:hover {
   color: white;
-  transform: rotate(-5deg);
   cursor: none;
   z-index: 10;
 }
+
 
 a:hover::before {
   inset: -32px;
   opacity: 1;
   transform: rotate(4deg);
+}
+
+a.me,
+a.me:visited {
+  color: red;
+}
+
+a.me:hover,
+a.me:visited:hover {
+  color: white;
+}
+
+
+a.me::before {
+  background-color: red;
+  transform: rotate(3deg);
+}
+
+a.me:hover::before {
+  transform: rotate(-4deg);
 }
