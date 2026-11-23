@@ -1,4 +1,4 @@
-interface Subdomain {
+export interface Subdomain {
   subdomain: string;
   description: string;
   createdAt: string;
@@ -18,18 +18,21 @@ export async function fetchSubdomains() {
   const sites: Subdomain[] = [];
 
   for (let page = 1; ; page++) {
-    const endpoint =
-      `https://api.github.com/users/maxrchung/repos?per_page=100&sort=created&direction=desc&type=owner&page=${page}`;
+    const endpoint = `https://api.github.com/users/maxrchung/repos?per_page=100&sort=created&direction=desc&type=owner&page=${page}`;
     const response = await fetch(endpoint);
     if (!response.ok) {
-      throw new Error(`GitHub API error: ${response.status} ${response.statusText}`);
+      throw new Error(
+        `GitHub API error: ${response.status} ${response.statusText}`,
+      );
     }
 
     const batch = (await response.json()) as GitHubRepo[];
     for (const repo of batch) {
       if (repo.archived) continue;
 
-      const match = repo.homepage?.trim().match(/^https?:\/\/([^/]+)\.max\.rodeo/i);
+      const match = repo.homepage
+        ?.trim()
+        .match(/^https?:\/\/([^/]+)\.max\.rodeo/i);
       if (!match) continue;
 
       const subdomain = match[1].toLowerCase();
@@ -43,7 +46,9 @@ export async function fetchSubdomains() {
     if (batch.length < 100) break;
   }
 
-  return sites.sort((a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt));
+  return sites.sort(
+    (a, b) => Date.parse(b.createdAt) - Date.parse(a.createdAt),
+  );
 }
 
 if (import.meta.main) {
