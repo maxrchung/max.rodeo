@@ -34,7 +34,7 @@ const LandingPage = ({ subdomains }: { subdomains: Subdomain[] }) => {
           <h1><span>max</span>.rodeo</h1>
 
           <p>
-            Here are some of <a href="https://maxrchung.com">my</a> web
+            Here are some of <a href="https://maxrchung.com">my</a> hosted web
             projects:
           </p>
 
