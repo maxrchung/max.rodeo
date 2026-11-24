@@ -18,6 +18,10 @@ main {
   max-width: 367px;
 }
 
+h1 {
+  margin-left: -24px;
+}
+
 span {
   font-size: 64px;
 }
