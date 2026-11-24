@@ -24,7 +24,8 @@ const LandingPage = ({ subdomains }: { subdomains: Subdomain[] }) => {
         <meta property="og:description" content="Landing page for my web projects" />
         <meta property="og:type" content="website" />
         <meta property="og:url" content="https://max.rodeo" />
-        <link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="240x240" />
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="stylesheet" href="/reset.css" />
         <link rel="stylesheet" href="/styles.css" />
       </head>
@@ -59,6 +60,13 @@ export const app = new Hono();
 
 app.use(jsxRenderer());
 
+app.get(
+  "/favicon.svg",
+  () =>
+    new Response(Bun.file("./public/favicon.svg"), {
+      headers: { "Content-Type": "image/svg+xml" },
+    }),
+);
 app.get(
   "/favicon.ico",
   () =>
