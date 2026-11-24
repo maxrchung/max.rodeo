@@ -16,10 +16,13 @@ interface GitHubRepo {
  */
 export async function fetchSubdomains() {
   const sites: Subdomain[] = [];
+  const headers = Bun.env.GITHUB_TOKEN
+    ? { Authorization: `Bearer ${Bun.env.GITHUB_TOKEN}` }
+    : undefined;
 
   for (let page = 1; ; page++) {
     const endpoint = `https://api.github.com/users/maxrchung/repos?per_page=100&sort=created&direction=desc&type=owner&page=${page}`;
-    const response = await fetch(endpoint);
+    const response = await fetch(endpoint, { headers });
     if (!response.ok) {
       throw new Error(
         `GitHub API error: ${response.status} ${response.statusText}`,
