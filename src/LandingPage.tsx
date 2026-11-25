@@ -29,8 +29,8 @@ export const LandingPage = ({ subdomains }: { subdomains: Subdomain[] }) => {
           </p>
 
           <ul>
-            {subdomains.map((site, index) => (
-              <li key={site.subdomain} style={{ marginLeft: index * 2 }}>
+            {subdomains.map((site) => (
+              <li key={site.subdomain}>
                 <a href={`https://${site.subdomain}.max.rodeo`}>
                   {site.subdomain}
                 </a>

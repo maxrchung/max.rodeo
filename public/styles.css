@@ -12,14 +12,16 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  perspective: 500px;
 }
 
 main {
   max-width: 367px;
+  transform: rotateY(5deg) rotateX(-5deg);
 }
 
 h1 {
-  margin-left: -24px;
+  margin-left: -4px;
 }
 
 span {
