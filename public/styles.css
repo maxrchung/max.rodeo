@@ -3,11 +3,16 @@ body {
   overscroll-behavior: none;
 }
 
+html {
+  overflow-y: auto;
+}
+
 body {
   width: 100%;
   min-height: 100dvh;
 
-  padding-inline: 24px;
+  padding: 48px 24px;
+  overflow: clip;
 
   display: flex;
   justify-content: center;
@@ -16,8 +21,30 @@ body {
 }
 
 main {
+  position: relative;
   max-width: 367px;
   transform: rotateY(5deg) rotateX(-5deg);
+}
+
+main::before,
+main::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: -1;
+}
+
+main::before {
+  inset-block-start: 0;
+  inset-block-end: -24px;
+  inset-inline: -100vmax;
+  border-block: 2px solid rgba(0, 0, 0, 0.05);
+}
+
+main::after {
+  inset-inline: -24px;
+  inset-block: -100vmax;
+  border-inline: 2px solid rgba(0, 0, 0, 0.05);
 }
 
 h1 {
